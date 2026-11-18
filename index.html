@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#203f35">
+  <meta name="description" content="Maak gratis een persoonlijk vierwekenplan voor je volgende release. Praktische opdrachten, artiestenbio, pitches en contenttemplates voor beginnende artiesten.">
+  <title>Artist Next Step — jouw volgende release, stap voor stap</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="content.js" defer></script>
+  <script src="planner.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Naar de inhoud</a>
+  <aside class="sidebar">
+    <a class="brand" href="#overzicht" aria-label="Artist Next Step, overzicht"><span class="brand-mark" aria-hidden="true">↗</span><span>artist<br><strong>next step.</strong></span></a>
+    <nav aria-label="Hoofdnavigatie">
+      <button class="nav-button active" data-view="overzicht"><span aria-hidden="true">⌂</span> Overzicht</button>
+      <button class="nav-button" data-view="plan"><span aria-hidden="true">▤</span> Mijn vierwekenplan</button>
+      <button class="nav-button" data-view="tools"><span aria-hidden="true">✎</span> Werkbank</button>
+      <button class="nav-button" data-view="reflectie"><span aria-hidden="true">↗</span> Terugblik</button>
+    </nav>
+    <div class="sidebar-bottom">
+      <p>Een initiatief van<br><a href="https://www.elroybakker.nl/" target="_blank" rel="noopener">Bakery Beats ↗</a></p>
+      <p class="storage-note">Je plan blijft in deze browser. Maak een back-up om het mee te nemen.</p>
+      <button class="text-button" id="export-button">Download back-up ↓</button>
+      <button class="text-button" id="import-button">Back-up openen ↑</button>
+      <input type="file" id="import-file" accept=".json,application/json" hidden>
+    </div>
+  </aside>
+  <div class="workspace">
+    <header class="topbar">
+      <span id="view-label">Jouw artiestenwerkplek</span>
+      <div class="topbar-right"><span class="save-status" id="save-status" role="status">Bewaard op dit apparaat</span><button class="profile-button" id="profile-button">Mijn startscan <span aria-hidden="true">↗</span></button></div>
+    </header>
+    <div id="storage-warning" class="notice warning" role="alert" hidden></div>
+    <main id="main" tabindex="-1">
+      <section id="view-overzicht" class="view">
+        <div id="welcome-hero" class="hero">
+          <div class="hero-copy"><p class="eyebrow">Voor onafhankelijke artiesten</p><h1>Je muziek is er.<br>Wat is je<br><em>volgende stap?</em></h1><p>Werk aan je volgende release met een plan dat past bij jouw doel en je tijd.</p><button class="button light" id="start-button">Maak mijn plan <span aria-hidden="true">↗</span></button><p class="hero-note">Gratis te gebruiken · zonder account</p></div>
+          <img src="artist-studio.png" alt="Een artiest werkt aan haar muziek en notities in een thuisstudio" width="1536" height="1024" fetchpriority="high">
+        </div>
+        <div id="personal-overview" hidden></div>
+        <div class="section-heading"><div><p class="eyebrow">Van idee naar uitvoering</p><h2>Vier weken. Een duidelijk ritme.</h2></div><button class="text-button" data-view="plan">Bekijk het plan ↗</button></div>
+        <div id="week-overview" class="week-grid"></div>
+        <div class="workbench-teaser"><div><p class="eyebrow">Meteen aan de slag</p><h2>Een goede bio.<br>Een pitch die iets vertelt.</h2><p>Werk je verhaal uit met invulbare templates en concrete voorbeelden.</p><button class="button secondary" data-view="tools">Open de werkbank ↗</button></div><div class="sample-note"><p class="note-label">Begin bij je verhaal</p><p class="serif">“Welk moment uit jouw leven moest een nummer worden?”</p><p>Gebruik je antwoord als opening van je volgende video.</p></div></div>
+      </section>
+
+      <section id="view-scan" class="view" hidden>
+        <div class="page-heading"><p class="eyebrow">Jouw vertrekpunt</p><h1>Maak het plan van jou.</h1><p>Een paar keuzes helpen om je opdrachten, planning en templates passend te maken.</p></div>
+        <form id="scan-form" class="form-card">
+          <div class="form-grid">
+            <label>Artiestennaam<input name="artist" required maxlength="80" autocomplete="nickname" placeholder="Hoe kennen mensen jou?"></label>
+            <label>Titel van je release<input name="song" required maxlength="120" placeholder="Een werktitel mag ook"></label>
+            <label>Genre of sound<input name="genre" required maxlength="100" placeholder="Bijvoorbeeld Afro R&B, indiepop of hiphop"></label>
+            <label>Geplande releasedatum<input name="releaseDate" type="date" required><small>De route loopt van drie weken vóór tot één week na je release.</small></label>
+            <label>Waar sta je nu?<select name="stage"><option value="finishing">Ik werk mijn nummer nog af</option><option value="ready">Mijn nummer is af, nog niet aangeleverd</option><option value="delivered">Mijn release is al aangeleverd</option></select></label>
+            <label>Je belangrijkste doel<select name="goal"><option value="first">Mijn eerste release goed voorbereiden</option><option value="audience">Meer betrokken luisteraars bereiken</option><option value="consistent">Meer regelmaat in mijn promotie</option></select></label>
+            <label>Tijd per week<select name="hours"><option value="1">Ongeveer 1 uur — houd het compact</option><option value="3" selected>Ongeveer 3 uur — ruimte om uit te werken</option><option value="5">5 uur of meer — ga de diepte in</option></select></label>
+            <label>Welk gevoel of verhaal zit in je muziek?<input name="theme" maxlength="180" placeholder="Bijvoorbeeld thuiskomen, liefdesverdriet, zelfvertrouwen"></label>
+            <label class="full-width">Wie wil je ermee bereiken?<input name="audience" maxlength="200" placeholder="Beschrijf een luisteraar, een moment of een plek"></label>
+          </div>
+          <p class="form-help">Je keuzes maken een plan op basis van vaste routes en templates. Je voortgang blijft bewaard als je de startscan aanpast.</p>
+          <button type="submit" class="button primary">Bewaar en open mijn plan ↗</button>
+        </form>
+      </section>
+
+      <section id="view-plan" class="view" hidden>
+        <div class="page-heading row-heading"><div><p class="eyebrow">Eén release, haalbare stappen</p><h1>Mijn vierwekenplan.</h1><p id="plan-description">Kies je vertrekpunt voor een persoonlijk plan.</p></div><button class="button secondary" id="print-button">Print mijn plan ↓</button></div>
+        <div id="plan-notice"></div>
+        <div id="plan-summary"></div>
+        <div class="week-tabs" id="week-tabs" role="tablist" aria-label="Kies een week"></div>
+        <div id="week-detail" role="tabpanel"></div>
+      </section>
+
+      <section id="view-tools" class="view" hidden>
+        <div class="page-heading"><p class="eyebrow">Van leeg document naar eerste versie</p><h1>Je werkbank.</h1><p>Schrijf, pas aan en bewaar. De placeholders tussen blokhaken vul je zelf in.</p></div>
+        <div class="tools-layout"><div id="tool-list" class="tool-list" aria-label="Kies een template"></div><article id="tool-editor" class="editor-card"></article></div>
+        <details class="sources"><summary>Waar is de informatie op gebaseerd?</summary><p>De opdrachten zijn een praktische werkwijze van Artist Next Step. Platforminformatie is gecontroleerd op 18 november 2026. Controleer deadlines en mogelijkheden ook bij je eigen distributeur.</p><ul><li><a href="https://support.spotify.com/to/artists/article/pitching-music-to-playlist-editors/" target="_blank" rel="noopener">Spotify for Artists — muziek pitchen</a></li><li><a href="https://artists.youtube/intl/en-US/resources/shorts-for-artists/" target="_blank" rel="noopener">YouTube for Artists — Shorts rond je release</a></li><li><a href="https://artists.youtube/intl/en-GB/resources/analytics-for-artists/" target="_blank" rel="noopener">YouTube for Artists — je resultaten begrijpen</a></li></ul></details>
+      </section>
+
+      <section id="view-reflectie" class="view" hidden>
+        <div class="page-heading"><p class="eyebrow">Leer van wat je doet</p><h1>Wat neem je mee?</h1><p>Vul je eigen cijfers en observaties in. Gebruik iedere week dezelfde bron en meetperiode.</p></div>
+        <div id="reflection-summary"></div>
+        <form id="reflection-form" class="form-card">
+          <div class="form-grid"><label>Week<select name="week"><option value="1">Week 1</option><option value="2">Week 2</option><option value="3">Week 3</option><option value="4">Week 4</option></select></label><label>Waar komen je cijfers vandaan?<input name="channel" maxlength="100" placeholder="Bijvoorbeeld Instagram Insights"></label><label>Bereik<input name="reach" type="number" min="0" max="1000000000" step="1" placeholder="Aantal uit je statistieken"></label><label>Klikken naar je muziek<input name="clicks" type="number" min="0" max="1000000000" step="1" placeholder="Laat leeg als je dit niet meet"></label><label class="full-width">Wat werkte en waaraan merkte je dat?<textarea name="worked" rows="3" maxlength="5000" placeholder="Bijvoorbeeld een video waarop mensen inhoudelijk reageerden"></textarea></label><label class="full-width">Wat pas je volgende week aan?<textarea name="next" rows="3" maxlength="5000" placeholder="Kies één verandering die je kunt testen"></textarea></label></div>
+          <button class="button primary" type="submit">Bewaar mijn terugblik ↗</button>
+        </form>
+      </section>
+      <footer class="page-footer"><span>Artist Next Step · door Bakery Beats</span><span>Jouw keuzes, jouw tempo.</span></footer>
+    </main>
+  </div>
+  <dialog id="task-dialog" aria-labelledby="task-title"><button class="dialog-close" id="close-task" aria-label="Sluit opdracht">×</button><div id="task-content"></div></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
